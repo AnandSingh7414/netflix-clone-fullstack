@@ -1,0 +1,93 @@
+.page {
+  background: #0a0a0a;
+  min-height: 100vh;
+}
+
+.content {
+  /* 🔥 Gap Fix 1: Content thoda aur upar laane ke liye padding-top kam kiya */
+  padding: 80px 4% 40px; 
+}
+
+.heading {
+  font-size: 26px; /* Text size standard */
+  font-weight: 700;
+  color: #fff;
+  /* 🔥 Gap Fix 2: Margin 32px se kam karke 12px kiya */
+  margin-bottom: 12px !important; 
+}
+
+/* THE CORE ADJUSTMENTS FOR AUTOMATICALLY TIGHTER SPACING: LARGER ICONS, TIGHTER GAPS */
+.grid {
+  display: grid;
+  /* 🔥 Gap Fix 3: **Slightly Increased Icon Size** base (from 160px to 180px) */
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 10px; /* Tighter overall gap */
+  /* 🔥 Gap Fix 4: Specific tighter row space */
+  row-gap: 10px;
+}
+
+.card {
+  position: relative;
+  border-radius: 4px;
+  cursor: pointer;
+  aspect-ratio: 2/3;
+  background: #1a1a1a;
+  transition: transform 0.3s ease;
+  /* 🔥 Gap Fix 5: **Slightly Increased Base Card Width** (from 180px to 200px) */
+  width: 200px;
+  margin: 0; /* Keep it tight within the grid */
+}
+
+/* Card hover animation with a slightly larger scale for a premium feel */
+.card:hover { transform: scale(1.1); z-index: 10; }
+
+.poster {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* The rest details (details for tight alignment) */
+.overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 100%);
+  padding: 15px 8px 8px; /* Tighter internal padding */
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.card:hover .overlay { opacity: 1; }
+
+.cardTitle {
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cardYear {
+  font-size: 10px;
+  color: #aaa;
+  margin-bottom: 5px;
+}
+
+.removeBtn {
+  background: rgba(229,9,20,0.9);
+  color: #fff;
+  border: none;
+  width: 100%; /* Button will now take full width for a clean look */
+  padding: 6px;
+  border-radius: 2px;
+  font-size: 10px;
+  text-transform: uppercase;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.removeBtn:hover { background: #ff0000; }

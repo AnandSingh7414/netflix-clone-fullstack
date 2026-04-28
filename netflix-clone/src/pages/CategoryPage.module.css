@@ -1,0 +1,41 @@
+.page {
+  background: #0a0a0a;
+  min-height: 100vh;
+}
+
+.content {
+  padding: 90px 0 60px;
+}
+
+.pageTitle {
+  font-size: 28px;
+  font-weight: 700;
+  color: #fff;
+  padding: 0 4%;
+  margin-bottom: 24px;
+}
+
+/* Skeleton loaders */
+.skeletonRow {
+  padding: 0 4%;
+  margin-bottom: 40px;
+}
+
+.skelTitle {
+  height: 20px;
+  width: 180px;
+  margin-bottom: 14px;
+  border-radius: 4px;
+}
+
+.skelCards {
+  display: flex;
+  gap: 8px;
+}
+
+.skelCard {
+  min-width: 200px;
+  height: 112px;
+  border-radius: 4px;
+  flex-shrink: 0;
+}

@@ -1,0 +1,138 @@
+.page {
+  background: #141414; /* Netflix standard dark */
+  min-height: 100vh;
+}
+
+.content {
+  padding: 100px 4% 60px;
+}
+
+.heading {
+  font-size: 24px;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 28px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 16px;
+}
+
+/* Premium Skeleton Loading */
+.skelCard {
+  height: auto;
+  aspect-ratio: 2/3;
+  border-radius: 6px;
+  background-color: #2a2a2a;
+  position: relative;
+  overflow: hidden;
+}
+
+.skelCard::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+  animation: sweep 1.5s infinite;
+}
+
+@keyframes sweep {
+  0% { left: -100%; }
+  100% { left: 200%; }
+}
+
+.card {
+  position: relative;
+  border-radius: 6px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  aspect-ratio: 2/3;
+  background-color: #222;
+  z-index: 1;
+}
+
+.card:hover {
+  transform: scale(1.08);
+  z-index: 10;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.7);
+}
+
+.poster {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.cardOverlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.95), transparent);
+  padding: 30px 10px 10px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.card:hover .cardOverlay {
+  opacity: 1;
+}
+
+.cardTitle {
+  font-size: 14px;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cardMeta {
+  display: flex;
+  gap: 8px;
+  font-size: 12px;
+  color: #aaa;
+}
+
+.match {
+  color: #46d369; /* Netflix match green */
+  font-weight: bold;
+}
+
+.error {
+  color: #fff;
+  background-color: rgba(229, 9, 20, 0.2);
+  border-left: 4px solid #e50914;
+  padding: 15px;
+  font-size: 16px;
+  margin-top: 20px;
+  border-radius: 4px;
+}
+
+.noResults {
+  color: #888;
+  font-size: 18px;
+  margin-top: 20px;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    gap: 10px;
+  }
+  .heading {
+    font-size: 20px;
+  }
+  .content {
+    padding: 80px 4% 40px;
+  }
+}

@@ -1,0 +1,97 @@
+.plansContainer {
+  min-height: 100vh;
+  background-color: #111;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 100px 20px 50px; /* Upar Navbar ki jagah chhodi hai */
+}
+
+.title {
+  font-size: 2rem;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.cardsWrapper {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.planCard {
+  background-color: #222;
+  border-radius: 10px;
+  padding: 30px;
+  width: 280px;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease;
+  border: 1px solid #333;
+}
+
+.planCard:hover {
+  transform: scale(1.05);
+}
+
+.premiumCard {
+  border: 2px solid #e50914; /* Netflix Red glow for premium */
+  box-shadow: 0 0 15px rgba(229, 9, 20, 0.3);
+}
+
+.planCard h2 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.price {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #aaa;
+  margin-bottom: 20px;
+}
+
+.features {
+  list-style-type: none;
+  padding: 0;
+  margin-bottom: 30px;
+  flex-grow: 1;
+}
+
+.features li {
+  margin-bottom: 10px;
+  font-size: 0.9rem;
+  color: #ccc;
+  position: relative;
+  padding-left: 20px;
+}
+
+.features li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: #e50914;
+}
+
+.subscribeBtn {
+  background-color: #e50914;
+  color: white;
+  border: none;
+  padding: 15px;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.subscribeBtn:hover {
+  background-color: #f40612;
+}
+
+.subscribeBtn:disabled {
+  background-color: #555;
+  cursor: not-allowed;
+}

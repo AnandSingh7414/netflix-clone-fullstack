@@ -1,0 +1,55 @@
+.footer {
+  padding: 48px 4%;
+  background: #141414;
+  border-top: 1px solid #222;
+}
+
+.social {
+  color: #999;
+  font-size: 14px;
+  margin-bottom: 24px;
+}
+
+.social a {
+  color: #999;
+  text-decoration: underline;
+}
+
+.links {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.link {
+  color: #737373;
+  font-size: 13px;
+  transition: color 0.2s;
+}
+
+.link:hover { color: #ccc; }
+
+.region {
+  margin-bottom: 20px;
+}
+
+.langSelect {
+  background: transparent;
+  color: #737373;
+  border: 1px solid #737373;
+  padding: 6px 12px;
+  font-size: 13px;
+  font-family: inherit;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.copy {
+  color: #737373;
+  font-size: 13px;
+}
+
+@media (max-width: 768px) {
+  .links { grid-template-columns: repeat(2, 1fr); }
+}

@@ -1,0 +1,218 @@
+/* 🔥 Yeh code white scrollbar ko poori website se hide kar dega */
+:global(body::-webkit-scrollbar) {
+  display: none;
+}
+:global(body) {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* NAVBAR MAIN */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 4%;
+  height: 68px;
+  background: transparent;
+  transition: background 0.4s ease;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.8) 10%, rgba(0,0,0,0));
+}
+
+/* Jab page scroll ho */
+.scrolled {
+  background: #141414;
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+}
+
+/* LEFT SIDE */
+.left {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.logo {
+  font-size: 28px;
+  font-weight: 900;
+  color: #e50914;
+  text-decoration: none;
+  letter-spacing: 1px;
+}
+
+.navLinks {
+  display: flex;
+  gap: 20px;
+}
+
+.link {
+  font-size: 14px;
+  color: #e5e5e5;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.link:hover {
+  color: #b3b3b3;
+}
+
+.activeLink {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+/* RIGHT SIDE (Perfect Alignment) */
+.right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* SEARCH BOX */
+.searchBox {
+  display: flex;
+  align-items: center;
+  border: 1px solid transparent;
+  padding: 4px 6px;
+  background: transparent;
+  transition: all 0.3s ease;
+  height: 36px; /* Box ki height fix kardi taaki click karne pe navbar hile nahi */
+}
+
+.searchOpen {
+  background: rgba(0, 0, 0, 0.8);
+  border: 1px solid #ffffff;
+}
+
+.iconBtn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 0 5px;
+  outline: none;
+}
+
+.input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: white;
+  font-size: 14px;
+  width: 0;
+  padding: 0;
+  opacity: 0;
+  transition: width 0.3s ease, opacity 0.3s ease, padding 0.3s ease;
+}
+
+.searchOpen .input {
+  width: 220px;
+  padding: 0 10px;
+  opacity: 1;
+}
+
+.input::placeholder {
+  color: #999;
+}
+
+/* PROFILE & AVATAR */
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Gap thoda adjust kiya */
+  cursor: pointer;
+  position: relative;
+  height: 68px; /* Navbar height ke barabar taaki hover area bada ho */
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 4px; /* Teal dabba ekdum sahi rounded square lagega */
+  object-fit: cover;
+}
+
+.caret {
+  color: white;
+  font-size: 12px;
+  transition: transform 0.3s ease;
+}
+
+.caretUp {
+  transform: rotate(180deg);
+}
+
+/* DROPDOWN MENU */
+.dropdown {
+  position: absolute;
+  top: 60px; /* Thoda neeche kiya taaki avatar se na takraye */
+  right: 0;
+  background: rgba(0, 0, 0, 0.9);
+  border: 1px solid #333;
+  min-width: 180px; /* Email aasaani se fit ho jayega */
+  border-radius: 4px;
+  padding: 10px 0;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.7);
+}
+
+/* Dropdown Arrow Fix */
+.dropdownArrow {
+  position: absolute;
+  top: -8px;
+  right: 20px;
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 8px solid rgba(0, 0, 0, 0.9); /* Dropdown ke color se match kar diya */
+}
+
+/* 🔥 MISSING CLASS: Iski wajah se email text ajeeb lag raha tha */
+.userInfo {
+  padding: 10px 15px;
+  color: #fff;
+  font-size: 13px;
+  font-weight: bold;
+  word-break: break-all;
+}
+
+.dropdownItem {
+  padding: 10px 15px;
+  color: #b3b3b3;
+  font-size: 13px;
+  text-decoration: none;
+  display: block;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.dropdownItem:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+
+.divider {
+  height: 1px;
+  background: #333; /* Divider ka color Netflix jaisa dark grey */
+  margin: 5px 0;
+}
+
+/* MOBILE RESPONSIVENESS */
+@media (max-width: 768px) {
+  .navLinks {
+    display: none;
+  }
+  .searchOpen .input {
+    width: 140px;
+  }
+}
