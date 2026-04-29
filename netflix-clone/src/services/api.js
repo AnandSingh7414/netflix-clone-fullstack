@@ -23,18 +23,22 @@ api.interceptors.response.use(
 export const signIn = (userData) => api.post("/api/auth/signin", userData);
 export const signUp = (userData) => api.post("/api/auth/signup", userData); 
 
-// Movies API - Agar /api/movies nahi chal raha toh sirf /movies try kar rahe hain
+// Movies API
 export const getMovies = () => api.get("/api/movies").catch(() => api.get("/movies"));
 export const getMovieById = (id) => api.get(`/api/movies/${id}`).catch(() => api.get(`/movies/${id}`));
 export const addMovie = (movie) => api.post("/api/movies", movie);
 export const deleteMovie = (id) => api.delete(`/api/movies/${id}`);
 
+// Search API (Build fix karne ke liye)
+export const searchMovies = (query) => api.get(`/api/movies/search?query=${query}`).catch(() => api.get(`/movies/search?query=${query}`));
+
 /**
  * IMAGE HELPER
  */
 export const getImage = (movie) => {
-  // Check for both underscore and camelCase formats to be safe
-  const imgUrl = movie.thumbnailUrl || movie.thumbnail_url;
+  // Fix: Dono formats (thumbnailUrl aur thumbnail_url) ko check kar rahe hain
+  const imgUrl = movie?.thumbnailUrl || movie?.thumbnail_url;
+  
   if (!imgUrl) {
     return "https://images.pexels.com/photos/1117132/pexels-photo-1117132.jpeg?auto=compress&cs=tinysrgb&w=500";
   }
