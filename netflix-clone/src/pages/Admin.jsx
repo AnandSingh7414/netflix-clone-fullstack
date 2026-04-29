@@ -5,7 +5,7 @@ import {
   deleteMovie as apiDeleteMovie, 
   getImage 
 } from "../services/api";
-import axios from "axios"; // Sync function ke liye
+import axios from "axios"; 
 
 function Admin() {
   const [movies, setMovies] = useState([]);
@@ -40,7 +40,8 @@ function Admin() {
   const handleSync = async () => {
     setSyncing(true);
     try {
-      await axios.post("https://netflix-clone-fullstack-production.up.railway.app/movies/sync-tmdb");
+      // 🔥 FIXED: Yahan /api/movies/sync-tmdb kar diya hai
+      await axios.post("https://netflix-clone-fullstack-production.up.railway.app/api/movies/sync-tmdb");
       alert("🔥 Database synced with TMDB successfully!");
       fetchMovies();
     } catch (err) {
@@ -66,7 +67,7 @@ function Admin() {
     if (window.confirm("Are you sure you want to delete this movie?")) {
       try {
         await apiDeleteMovie(id);
-        fetchMovies(); // Delete hone ke baad list turant refresh hogi
+        fetchMovies(); 
       } catch(err) {
         alert("Error deleting movie.");
       }
@@ -75,7 +76,6 @@ function Admin() {
 
   return (
     <div style={styles.container}>
-      {/* Sidebar / Header */}
       <div style={styles.header}>
         <div>
           <h1 style={styles.title}>NETFLIX <span style={styles.badge}>ADMIN</span></h1>
@@ -91,7 +91,6 @@ function Admin() {
       </div>
 
       <div style={styles.contentLayout}>
-        {/* Left: Form Card */}
         <div style={styles.card}>
           <h3 style={styles.cardTitle}>Upload New Content</h3>
           <form onSubmit={handleAddMovie} style={styles.form}>
@@ -107,14 +106,12 @@ function Admin() {
           </form>
         </div>
 
-        {/* Right: Statistics/Stats */}
         <div style={styles.statsRow}>
              <div style={styles.statCard}><h3>{movies.length}</h3><p>Total Movies</p></div>
              <div style={styles.statCard}><h3>{Array.from(new Set(movies.map(m => m.category))).length}</h3><p>Categories</p></div>
         </div>
       </div>
 
-      {/* Bottom: Movie Table/Grid */}
       <div style={{...styles.card, marginTop: "30px"}}>
         <h3 style={styles.cardTitle}>Library Manager</h3>
         {loading ? <div style={styles.loader}>Loading Movies...</div> : (
@@ -123,14 +120,11 @@ function Admin() {
               <div key={movie.id} style={styles.movieItem}>
                 <div style={styles.imageWrapper}>
                   <img src={getImage(movie)} alt={movie.title} style={styles.movieThumb} />
-                  
-                  {/* Fixed Delete Button Position */}
                   <div style={styles.deleteButtonContainer}>
                     <button onClick={() => handleDelete(movie.id)} style={styles.deleteIcon} title="Delete Movie">
                       🗑️
                     </button>
                   </div>
-
                 </div>
                 <div style={styles.movieInfo}>
                   <h4 style={styles.movieTitle}>{movie.title}</h4>
@@ -145,7 +139,6 @@ function Admin() {
   );
 }
 
-// --- STYLES OBJECT ---
 const styles = {
   container: {
     padding: "100px 5% 50px",
@@ -224,8 +217,6 @@ const styles = {
   },
   imageWrapper: { position: "relative", height: "120px" },
   movieThumb: { width: "100%", height: "100%", objectFit: "cover" },
-  
-  /* FIXED STYLES FOR DELETE BUTTON */
   deleteButtonContainer: {
     position: "absolute",
     top: "8px",
@@ -233,7 +224,7 @@ const styles = {
     zIndex: 10
   },
   deleteIcon: { 
-    background: "rgba(229, 9, 20, 0.9)", // Netflix red with slight transparency
+    background: "rgba(229, 9, 20, 0.9)", 
     border: "1px solid white", 
     padding: "6px 8px", 
     borderRadius: "6px", 
@@ -241,7 +232,6 @@ const styles = {
     fontSize: "1rem",
     boxShadow: "0px 4px 6px rgba(0,0,0,0.6)"
   },
-  
   movieInfo: { padding: "10px" },
   movieTitle: { margin: "0 0 5px 0", fontSize: "0.9rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" },
   movieCat: { margin: 0, fontSize: "0.75rem", color: "#888" },

@@ -73,7 +73,8 @@ export function MoviesProvider({ children }) {
 
   const fetchMovies = async () => {
     try {
-      const res = await api.get("/movies");
+      // 🔥 FIXED: Yahan /api/movies kar diya hai
+      const res = await api.get("/api/movies");
       const data = Array.isArray(res.data) ? res.data : [];
 
       if (data.length === 0) {
@@ -113,11 +114,9 @@ export function MoviesProvider({ children }) {
 
   useEffect(() => {
     const user = localStorage.getItem("user");
-    // 🔥 FIX: Sirf tabhi fetch karo jab user logged in ho
     if (user) {
       fetchMovies();
     } else {
-      // Agar login nahi hai toh loading band kar do taaki UI block na ho
       dispatch({ type: "SET_DATA", payload: { loading: false } });
     }
   }, []);
