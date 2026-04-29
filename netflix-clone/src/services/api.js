@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "http://localhost:8081";
+const BASE_URL = "https://netflix-clone-fullstack-production.up.railway.app";
 
 const api = axios.create({
   baseURL: BASE_URL,
@@ -21,25 +21,24 @@ api.interceptors.response.use(
 
 // Auth API
 export const signIn = (userData) => api.post("/api/auth/signin", userData);
-export const signUp = (userData) => api.post("/api/auth/signup", userData); // 🔥 Naya SignUp export
+export const signUp = (userData) => api.post("/api/auth/signup", userData); 
 
-// Movies API
-export const getMovies = () => api.get("/movies");
-export const getMovieById = (id) => api.get(`/movies/${id}`);
-export const addMovie = (movie) => api.post("/movies", movie);
-export const deleteMovie = (id) => api.delete(`/movies/${id}`);
-export const updateMovie = (id, movie) => api.put(`/movies/${id}`, movie);
-export const searchMovies = (query) => api.get(`/movies/search?title=${query}`);
-export const getMoviesByCategory = (category) => api.get(`/movies/category/${category}`);
+// Movies API - Agar /api/movies nahi chal raha toh sirf /movies try kar rahe hain
+export const getMovies = () => api.get("/api/movies").catch(() => api.get("/movies"));
+export const getMovieById = (id) => api.get(`/api/movies/${id}`).catch(() => api.get(`/movies/${id}`));
+export const addMovie = (movie) => api.post("/api/movies", movie);
+export const deleteMovie = (id) => api.delete(`/api/movies/${id}`);
 
 /**
  * IMAGE HELPER
  */
 export const getImage = (movie) => {
-  if (!movie || !movie.thumbnailUrl) {
+  // Check for both underscore and camelCase formats to be safe
+  const imgUrl = movie.thumbnailUrl || movie.thumbnail_url;
+  if (!imgUrl) {
     return "https://images.pexels.com/photos/1117132/pexels-photo-1117132.jpeg?auto=compress&cs=tinysrgb&w=500";
   }
-  return movie.thumbnailUrl;
+  return imgUrl;
 };
 
 export default api;

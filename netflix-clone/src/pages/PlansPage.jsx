@@ -12,11 +12,11 @@ const PlansPage = () => {
       const amountInPaise = price * 100;
 
       // Axios ki jagah Fetch use kar rahe hain for better compatibility
-      const response = await fetch("http://localhost:8081/api/payment/create-checkout-session", {
+      const response = await fetch("https://netflix-clone-fullstack-production.up.railway.app/api/payment/create-checkout-session", {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-        },
+        },  
         body: JSON.stringify({
           planName: planName,
           amount: amountInPaise,

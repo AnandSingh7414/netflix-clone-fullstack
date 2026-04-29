@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useMovies } from "../context/MoviesContext";
 import Modal from "../components/Modal";
-import { getImage } from "../services/api";
+import { getImage } from "../services/api"; // getImage wapas import kiya helper ke liye
 import styles from "./Home.module.css";
 
 function Home() {
@@ -36,15 +36,14 @@ function Home() {
     );
   }
 
-  // ✅ PROFESSIONAL FULL-SCREEN ERROR UI
   if (error) {
     return (
       <div className={styles.fullScreenError}>
         <div className={styles.errorContent}>
           <h1 className={styles.errorTitle}>Lost your connection?</h1>
           <p className={styles.errorText}>
-            Please Cheack your backend connection (Port 8081) looks Offline. <br />
-            Please restart your server "Try Again" Ckick on.
+            Please check your backend connection. <br />
+            Railway server might be waking up.
           </p>
           <button className={styles.errorButton} onClick={() => window.location.reload()}>
             TRY AGAIN
@@ -67,6 +66,7 @@ function Home() {
                 key={movie.id}
                 className={styles.hero} 
                 style={{ 
+                  // ✅ getImage function use ho raha hai jo api.jsx mein fix kiya hai
                   backgroundImage: `linear-gradient(to bottom, rgba(20,20,20,0) 30%, rgba(20,20,20,0.8) 80%, rgba(20,20,20,1) 100%), url(${getImage(movie)})`,
                   backgroundSize: 'cover',
                   backgroundPosition: 'center 10%'
@@ -118,6 +118,7 @@ function Home() {
                   onClick={() => dispatch({ type: "OPEN_MODAL", payload: movie })}
                 >
                   <img 
+                    // ✅ getImage function hi images ko sahi TMDB link pe bhejega
                     src={getImage(movie)} 
                     alt={movie.title} 
                     className={styles.poster} 

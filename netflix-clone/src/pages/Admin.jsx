@@ -40,7 +40,7 @@ function Admin() {
   const handleSync = async () => {
     setSyncing(true);
     try {
-      await axios.post("http://localhost:8081/movies/sync-tmdb");
+      await axios.post("https://netflix-clone-fullstack-production.up.railway.app/movies/sync-tmdb");
       alert("🔥 Database synced with TMDB successfully!");
       fetchMovies();
     } catch (err) {
