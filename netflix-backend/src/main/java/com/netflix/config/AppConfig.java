@@ -13,8 +13,8 @@ public class AppConfig {
     @Bean
     public RestTemplate restTemplate() {
         SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
-        factory.setConnectTimeout(5000);   // 5 sec connect timeout
-        factory.setReadTimeout(5000);      // 5 sec read timeout
+        factory.setConnectTimeout(5000);
+        factory.setReadTimeout(5000);
         return new RestTemplate(factory);
     }
 
@@ -24,15 +24,17 @@ public class AppConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins(
+                        // 🔥 Pattern use kar rahe hain taaki saare Vercel links allow ho jayein
+                        .allowedOriginPatterns(
                                 "https://anand-movies-hub.vercel.app",
-                                "https://anand-movies-4ohluc59i-anandsingh7414s-projects.vercel.app",
+                                "https://anand-movies-*-anandsingh7414s-projects.vercel.app",
+                                "https://anand-movies-*.vercel.app",
                                 "http://localhost:5173"
                         )
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
                         .allowCredentials(true)
-                        .maxAge(3600); // Browser ko 1 ghante tak config yaad rakhne ko bolega
+                        .maxAge(3600);
             }
         };
     }
