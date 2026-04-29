@@ -9,8 +9,6 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.List;
 
@@ -24,21 +22,7 @@ public class NetflixBackendApplication {
 		SpringApplication.run(NetflixBackendApplication.class, args);
 	}
 
-	// 🔥 GLOBAL CORS CONFIG: Ye blank screen aur credential errors ko hamesha ke liye khatam kar dega
-	@Bean
-	public WebMvcConfigurer corsConfigurer() {
-		return new WebMvcConfigurer() {
-			@Override
-			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/**")
-						.allowedOriginPatterns("http://localhost:5173")
-						.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-						.allowedHeaders("*")
-						.allowCredentials(true)
-						.maxAge(3600);
-			}
-		};
-	}
+	// CORS Bean yahan se hata di gayi hai kyunki wo AppConfig.java mein shift kar di hai
 
 	@Bean
 	CommandLineRunner init(MovieRepository repo) {
