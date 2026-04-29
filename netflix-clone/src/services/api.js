@@ -1,6 +1,13 @@
 import axios from "axios";
 
-const BASE_URL = "https://netflix-clone-fullstack-production.up.railway.app";
+/**
+ * 🔥 SMART URL LOGIC:
+ * Agar aap apne computer par ho (Development), toh ye 8081 use karega.
+ * Agar aap Vercel par live ho (Production), toh ye .env wali Railway link use karega.
+ */
+const BASE_URL = import.meta.env.MODE === 'development' 
+  ? "http://localhost:8081" 
+  : import.meta.env.VITE_API_BASE_URL;
 
 const api = axios.create({
   baseURL: BASE_URL,
@@ -36,9 +43,9 @@ export const searchMovies = (query) => api.get(`/api/movies/search?query=${query
  * IMAGE HELPER
  */
 export const getImage = (movie) => {
-  const imgUrl = movie?.thumbnailUrl || movie?.thumbnail_url;
+  // Database se 'thumbnail_url' (underscore) ya Context se 'thumbnailUrl' (camelCase)
+  const imgUrl = movie?.thumbnail_url || movie?.thumbnailUrl;
   
-  // 🔥 Logic: Agar image missing hai YA via.placeholder hai, toh stable image load karo
   if (!imgUrl || imgUrl.includes("via.placeholder.com")) {
     return "https://placehold.jp/24/333333/ffffff/300x170.png?text=No%20Image";
   }
