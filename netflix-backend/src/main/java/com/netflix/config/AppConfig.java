@@ -24,14 +24,15 @@ public class AppConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOriginPatterns(
+                        .allowedOrigins(
                                 "https://anand-movies-hub.vercel.app",
-                                "https://anand-movies-*-anandsingh7414s-projects.vercel.app",
+                                "https://anand-movies-4ohluc59i-anandsingh7414s-projects.vercel.app",
                                 "http://localhost:5173"
                         )
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
-                        .allowCredentials(true);
+                        .allowCredentials(true)
+                        .maxAge(3600); // Browser ko 1 ghante tak config yaad rakhne ko bolega
             }
         };
     }
