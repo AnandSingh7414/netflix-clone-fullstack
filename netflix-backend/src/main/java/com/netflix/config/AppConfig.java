@@ -24,14 +24,10 @@ public class AppConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins(
-                                "http://localhost:5173",
-                                "https://netflix-clone-fullstack-git-main-anandsingh7414s-projects.vercel.app",
-                                "https://netflix-clone-fullstack-frruvle6e-anandsingh7414s-projects.vercel.app"
-                        )
+                        .allowedOriginPatterns("*") // 🔥 Sabko allow karo taaki offline error khatam ho
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
-                        .allowCredentials(true);
+                        .allowCredentials(false); // 🔥 Credentials false karna zaroori hai '*' ke saath
             }
         };
     }
