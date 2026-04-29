@@ -24,8 +24,13 @@ public class AppConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        // 🔥 Ab koi bhi origin (Vercel ke saare links) allow ho jayenge
-                        .allowedOriginPatterns("*")
+                        // 🔥 Yahan humne explicitly Vercel patterns allow kiye hain
+                        // Taki 'allowCredentials(true)' ke saath conflict na ho
+                        .allowedOriginPatterns(
+                                "https://*.vercel.app",
+                                "https://anand-movies-hub.vercel.app",
+                                "http://localhost:5173"
+                        )
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
                         .allowCredentials(true)
