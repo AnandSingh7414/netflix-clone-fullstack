@@ -24,10 +24,13 @@ public class AppConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOriginPatterns("*") // 🔥 Sabko allow karo taaki offline error khatam ho
+                        .allowedOrigins(
+                                "https://anand-movies-hub.vercel.app",
+                                "http://localhost:5173"
+                        )
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
-                        .allowCredentials(false); // 🔥 Credentials false karna zaroori hai '*' ke saath
+                        .allowCredentials(true);
             }
         };
     }
