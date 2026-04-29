@@ -29,19 +29,20 @@ export const getMovieById = (id) => api.get(`/api/movies/${id}`);
 export const addMovie = (movie) => api.post("/api/movies", movie);
 export const deleteMovie = (id) => api.delete(`/api/movies/${id}`);
 
-// Search API (Build fix karne ke liye)
+// Search API
 export const searchMovies = (query) => api.get(`/api/movies/search?query=${query}`);
 
 /**
  * IMAGE HELPER
  */
 export const getImage = (movie) => {
-  // Fix: Dono formats (thumbnailUrl aur thumbnail_url) ko check kar rahe hain
   const imgUrl = movie?.thumbnailUrl || movie?.thumbnail_url;
   
-  if (!imgUrl) {
-    return "https://images.pexels.com/photos/1117132/pexels-photo-1117132.jpeg?auto=compress&cs=tinysrgb&w=500";
+  // 🔥 Logic: Agar image missing hai YA via.placeholder hai, toh stable image load karo
+  if (!imgUrl || imgUrl.includes("via.placeholder.com")) {
+    return "https://placehold.jp/24/333333/ffffff/300x170.png?text=No%20Image";
   }
+  
   return imgUrl;
 };
 

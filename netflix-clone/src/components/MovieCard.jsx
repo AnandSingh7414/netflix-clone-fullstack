@@ -7,15 +7,19 @@ const MovieCard = memo(function MovieCard({ movie }) {
   const [hovered, setHovered] = useState(false);
   const timerRef = useRef(null);
 
+  // Fallback Image Constant
+  const FALLBACK_IMAGE = "https://placehold.jp/24/333333/ffffff/300x170.png?text=No%20Image";
+
   // Title support (Movies + TV Shows)
   const title = movie?.title || movie?.name || movie?.original_name || "No Title";
 
-  // Image fallback (Backend + TMDB + placeholder)
-  const imgUrl =
-    movie?.thumbnailUrl?.trim() ||
-    (movie?.poster_path
-      ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-      : "https://via.placeholder.com/300x170");
+  // Image logic: Prioritize backend thumbnailUrl -> TMDB -> Fallback
+  let imgUrl = FALLBACK_IMAGE;
+  if (movie?.thumbnailUrl && !movie.thumbnailUrl.includes("via.placeholder.com")) {
+    imgUrl = movie.thumbnailUrl;
+  } else if (movie?.poster_path) {
+    imgUrl = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
+  }
 
   const handleMouseEnter = () => {
     timerRef.current = setTimeout(() => setHovered(true), 200);
@@ -54,7 +58,9 @@ const MovieCard = memo(function MovieCard({ movie }) {
         loading="lazy"
         className={styles.poster}
         onError={(e) => {
-          e.target.src = "https://via.placeholder.com/300x170";
+          if (e.target.src !== FALLBACK_IMAGE) {
+            e.target.src = FALLBACK_IMAGE;
+          }
         }}
       />
 
@@ -79,7 +85,6 @@ const MovieCard = memo(function MovieCard({ movie }) {
             </div>
 
             <p className={styles.overlayTitle}>{title}</p>
-            {/* Extra info from backend */}
             {movie?.releaseYear && (
               <p className={styles.overlayInfo}>Year: {movie.releaseYear}</p>
             )}

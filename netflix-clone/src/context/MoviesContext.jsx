@@ -3,6 +3,14 @@ import api from "../services/api";
 
 const MoviesContext = createContext();
 
+// Fallback image function
+const getValidImageUrl = (url) => {
+  if (!url || url.includes("via.placeholder.com")) {
+    return "https://placehold.jp/24/333333/ffffff/300x170.png?text=No%20Image";
+  }
+  return url;
+};
+
 const initialState = {
   featured: null,
   categories: [],
@@ -23,46 +31,38 @@ function reducer(state, action) {
         loading: false,
         error: null,
       };
-
     case "SET_ERROR":
       return {
         ...state,
         error: action.payload,
         loading: false,
       };
-
     case "OPEN_MODAL":
       return {
         ...state,
         selectedMovie: action.payload,
         modalOpen: true,
       };
-
     case "CLOSE_MODAL":
       return {
         ...state,
         selectedMovie: null,
         modalOpen: false,
       };
-
     case "ADD_TO_LIST": {
       const exists = state.myList.some((m) => m.id === action.payload.id);
       if (exists) return state;
-
       const updated = [...state.myList, action.payload];
       localStorage.setItem("nf_mylist", JSON.stringify(updated));
       return { ...state, myList: updated };
     }
-
     case "REMOVE_FROM_LIST": {
       const updated = state.myList.filter((m) => m.id !== action.payload);
       localStorage.setItem("nf_mylist", JSON.stringify(updated));
       return { ...state, myList: updated };
     }
-
     case "SET_SEARCH":
       return { ...state, searchQuery: action.payload };
-
     default:
       return state;
   }
@@ -73,7 +73,6 @@ export function MoviesProvider({ children }) {
 
   const fetchMovies = async () => {
     try {
-      // 🔥 FIXED: Yahan /api/movies kar diya hai
       const res = await api.get("/api/movies");
       const data = Array.isArray(res.data) ? res.data : [];
 
@@ -82,8 +81,14 @@ export function MoviesProvider({ children }) {
         return;
       }
 
+      // 🔥 Fixed: Image URL ko sanitize kiya hai
       const cleanData = data
-        .filter(m => m?.title && m?.thumbnailUrl)
+        .filter(m => m?.title)
+        .map(movie => ({
+          ...movie,
+          thumbnailUrl: getValidImageUrl(movie.thumbnailUrl),
+          videoUrl: movie.videoUrl || ""
+        }))
         .slice(0, 50); 
 
       const featured = cleanData[0] || null;
