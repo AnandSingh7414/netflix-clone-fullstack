@@ -10,13 +10,22 @@ const MovieCard = memo(function MovieCard({ movie }) {
   // Fallback Image Constant
   const FALLBACK_IMAGE = "https://placehold.jp/24/333333/ffffff/300x170.png?text=No%20Image";
 
-  // Title support (Movies + TV Shows)
+  // Title support
   const title = movie?.title || movie?.name || movie?.original_name || "No Title";
 
-  // Image logic: Prioritize backend thumbnailUrl -> TMDB -> Fallback
+  /**
+   * 🔥 FIXED IMAGE LOGIC:
+   * 1. Check 'thumbnail_url' (Database column name)
+   * 2. Check 'thumbnailUrl' (Frontend backup)
+   * 3. Check 'poster_path' (TMDB backup)
+   */
   let imgUrl = FALLBACK_IMAGE;
-  if (movie?.thumbnailUrl && !movie.thumbnailUrl.includes("via.placeholder.com")) {
-    imgUrl = movie.thumbnailUrl;
+  
+  // Database se aane wala asli path 'thumbnail_url' hota hai
+  const dbImage = movie?.thumbnail_url || movie?.thumbnailUrl;
+
+  if (dbImage && !dbImage.includes("via.placeholder.com")) {
+    imgUrl = dbImage;
   } else if (movie?.poster_path) {
     imgUrl = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
   }
@@ -69,16 +78,13 @@ const MovieCard = memo(function MovieCard({ movie }) {
           <div className={styles.overlayContent}>
             <div className={styles.overlayActions}>
               <button className={styles.playBtn}>▶</button>
-
               <button
                 className={styles.actionBtn}
                 onClick={handleAddToList}
               >
                 ＋
               </button>
-
               <button className={styles.actionBtn}>👍</button>
-
               <button className={styles.expandBtn} onClick={handleClick}>
                 ⌄
               </button>
