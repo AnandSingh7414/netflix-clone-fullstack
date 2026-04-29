@@ -25,30 +25,13 @@ const initialState = {
 function reducer(state, action) {
   switch (action.type) {
     case "SET_DATA":
-      return {
-        ...state,
-        ...action.payload,
-        loading: false,
-        error: null,
-      };
+      return { ...state, ...action.payload, loading: false, error: null };
     case "SET_ERROR":
-      return {
-        ...state,
-        error: action.payload,
-        loading: false,
-      };
+      return { ...state, error: action.payload, loading: false };
     case "OPEN_MODAL":
-      return {
-        ...state,
-        selectedMovie: action.payload,
-        modalOpen: true,
-      };
+      return { ...state, selectedMovie: action.payload, modalOpen: true };
     case "CLOSE_MODAL":
-      return {
-        ...state,
-        selectedMovie: null,
-        modalOpen: false,
-      };
+      return { ...state, selectedMovie: null, modalOpen: false };
     case "ADD_TO_LIST": {
       const exists = state.myList.some((m) => m.id === action.payload.id);
       if (exists) return state;
@@ -81,14 +64,17 @@ export function MoviesProvider({ children }) {
         return;
       }
 
-      // 🔥 Fixed: Image URL ko sanitize kiya hai
+      // 🔥 FIXED: Database se 'thumbnail_url' ya 'thumbnailUrl' dono check kar raha hai
       const cleanData = data
         .filter(m => m?.title)
-        .map(movie => ({
-          ...movie,
-          thumbnailUrl: getValidImageUrl(movie.thumbnailUrl),
-          videoUrl: movie.videoUrl || ""
-        }))
+        .map(movie => {
+          const rawImg = movie.thumbnail_url || movie.thumbnailUrl;
+          return {
+            ...movie,
+            thumbnailUrl: getValidImageUrl(rawImg),
+            videoUrl: movie.video_url || movie.videoUrl || ""
+          };
+        })
         .slice(0, 50); 
 
       const featured = cleanData[0] || null;

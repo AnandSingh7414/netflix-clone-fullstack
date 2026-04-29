@@ -7,28 +7,32 @@ const MovieCard = memo(function MovieCard({ movie }) {
   const [hovered, setHovered] = useState(false);
   const timerRef = useRef(null);
 
-  // Fallback Image Constant
+  // Safe Fallback Image
   const FALLBACK_IMAGE = "https://placehold.jp/24/333333/ffffff/300x170.png?text=No%20Image";
 
-  // Title support
-  const title = movie?.title || movie?.name || movie?.original_name || "No Title";
+  // Title Logic
+  const title = movie?.title || movie?.name || "No Title";
 
   /**
-   * 🔥 FIXED IMAGE LOGIC:
-   * 1. Check 'thumbnail_url' (Database column name)
-   * 2. Check 'thumbnailUrl' (Frontend backup)
-   * 3. Check 'poster_path' (TMDB backup)
+   * 🔥 IMAGE LOGIC FIX:
+   * Database mein 'thumbnail_url' hai, Context 'thumbnailUrl' bana raha hai.
+   * Hum dono ko check karenge + TMDB fallback.
    */
-  let imgUrl = FALLBACK_IMAGE;
-  
-  // Database se aane wala asli path 'thumbnail_url' hota hai
-  const dbImage = movie?.thumbnail_url || movie?.thumbnailUrl;
+  const getImgUrl = () => {
+    const rawUrl = movie?.thumbnail_url || movie?.thumbnailUrl;
 
-  if (dbImage && !dbImage.includes("via.placeholder.com")) {
-    imgUrl = dbImage;
-  } else if (movie?.poster_path) {
-    imgUrl = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
-  }
+    if (rawUrl && rawUrl.startsWith('http') && !rawUrl.includes("via.placeholder.com")) {
+      return rawUrl;
+    }
+    
+    if (movie?.poster_path) {
+      return `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
+    }
+
+    return FALLBACK_IMAGE;
+  };
+
+  const imgUrl = getImgUrl();
 
   const handleMouseEnter = () => {
     timerRef.current = setTimeout(() => setHovered(true), 200);
@@ -40,18 +44,12 @@ const MovieCard = memo(function MovieCard({ movie }) {
   };
 
   const handleClick = () => {
-    dispatch({
-      type: "OPEN_MODAL",
-      payload: movie,
-    });
+    dispatch({ type: "OPEN_MODAL", payload: movie });
   };
 
   const handleAddToList = (e) => {
     e.stopPropagation();
-    dispatch({
-      type: "ADD_TO_LIST",
-      payload: movie,
-    });
+    dispatch({ type: "ADD_TO_LIST", payload: movie });
   };
 
   return (
@@ -78,21 +76,14 @@ const MovieCard = memo(function MovieCard({ movie }) {
           <div className={styles.overlayContent}>
             <div className={styles.overlayActions}>
               <button className={styles.playBtn}>▶</button>
-              <button
-                className={styles.actionBtn}
-                onClick={handleAddToList}
-              >
-                ＋
-              </button>
+              <button className={styles.actionBtn} onClick={handleAddToList}>＋</button>
               <button className={styles.actionBtn}>👍</button>
-              <button className={styles.expandBtn} onClick={handleClick}>
-                ⌄
-              </button>
+              <button className={styles.expandBtn} onClick={handleClick}>⌄</button>
             </div>
 
             <p className={styles.overlayTitle}>{title}</p>
-            {movie?.releaseYear && (
-              <p className={styles.overlayInfo}>Year: {movie.releaseYear}</p>
+            {(movie?.releaseYear || movie?.release_year) && (
+              <p className={styles.overlayInfo}>Year: {movie.releaseYear || movie.release_year}</p>
             )}
             {movie?.rating && (
               <p className={styles.overlayInfo}>⭐ {movie.rating}</p>
