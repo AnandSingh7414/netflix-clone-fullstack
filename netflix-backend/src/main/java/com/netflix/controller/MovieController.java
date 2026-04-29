@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/movies")
+@RequestMapping("/api/movies")
 // 🔥 Yahan se purana @CrossOrigin hata diya hai kyunki Global Config ab handle karega
 public class MovieController {
 
