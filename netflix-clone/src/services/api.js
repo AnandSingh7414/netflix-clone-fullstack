@@ -24,13 +24,13 @@ export const signIn = (userData) => api.post("/api/auth/signin", userData);
 export const signUp = (userData) => api.post("/api/auth/signup", userData); 
 
 // Movies API
-export const getMovies = () => api.get("/api/movies").catch(() => api.get("/movies"));
-export const getMovieById = (id) => api.get(`/api/movies/${id}`).catch(() => api.get(`/movies/${id}`));
+export const getMovies = () => api.get("/api/movies");
+export const getMovieById = (id) => api.get(`/api/movies/${id}`);
 export const addMovie = (movie) => api.post("/api/movies", movie);
 export const deleteMovie = (id) => api.delete(`/api/movies/${id}`);
 
 // Search API (Build fix karne ke liye)
-export const searchMovies = (query) => api.get(`/api/movies/search?query=${query}`).catch(() => api.get(`/movies/search?query=${query}`));
+export const searchMovies = (query) => api.get(`/api/movies/search?query=${query}`);
 
 /**
  * IMAGE HELPER
